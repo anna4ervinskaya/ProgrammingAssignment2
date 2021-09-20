@@ -9,23 +9,23 @@ makeCacheMatrix <- function(x = matrix()) {
     m <<- NULL
   }
   get <- function() x
-  setsolve <- function(solve) m <<- solve
-  getsolve <- function() m
+  setInv <- function(inv) m <<- inv
+  getInv <- function() m
   list(set = set, get = get,
-       setsolve = setsolve,
-       getsolve = getsolve)
+       setInv = setInv,
+       getInv = getInv)
 }
 
 
 ## Takes cacheable matrix object and returns result of solve function
 cacheSolve <- function(x, ...) {
-  m <- x$getsolve()
+  m <- x$getInv()
   if(!is.null(m)) {
     message("getting cached data")
     return(m)
   }
   data <- x$get()
   m <- solve(data, ...)
-  x$setsolve(m)
-  m      
+  x$setInv(m)
+  m
 }
